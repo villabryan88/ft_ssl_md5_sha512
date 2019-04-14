@@ -6,18 +6,18 @@
 /*   By: bvilla <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 18:46:07 by bvilla            #+#    #+#             */
-/*   Updated: 2019/04/13 19:31:26 by bvilla           ###   ########.fr       */
+/*   Updated: 2019/04/13 20:02:24 by bvilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_ssl.h>
 
-unsigned int leftrotate (x, c)
+unsigned int	leftrotate (unsigned int x, unsigned int c)
 {
     return ((x << c) | (x >> (32 - c)));
 }
 
-unsigned int	*break_into_words(char *chunk)
+unsigned int	*break_into_words(unsigned char *chunk)
 {
 	static unsigned int			m[16];
 

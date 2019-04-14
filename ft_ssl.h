@@ -6,7 +6,7 @@
 /*   By: bvilla <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 16:03:22 by bvilla            #+#    #+#             */
-/*   Updated: 2019/04/13 19:30:46 by bvilla           ###   ########.fr       */
+/*   Updated: 2019/04/13 20:02:37 by bvilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 
 unsigned int	*set_s();
 unsigned int	*set_k();
+unsigned int	leftrotate (unsigned int x, unsigned int c);
+unsigned int	*break_into_words(unsigned char *chunk);
 
 
 

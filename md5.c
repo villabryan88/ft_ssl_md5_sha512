@@ -6,7 +6,7 @@
 /*   By: bvilla <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 15:02:59 by bvilla            #+#    #+#             */
-/*   Updated: 2019/04/13 19:29:39 by bvilla           ###   ########.fr       */
+/*   Updated: 2019/04/13 20:05:12 by bvilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ unsigned int g_k[64] = {
 		0xf7537e82, 0xbd3af235, 0x2ad7d2bb, 0xeb86d391
 };
 
-int				get_next_chunk(char *msg, int fd, char *buf)
+int				get_next_chunk(char *msg, int fd, unsigned char *buf)
 {
 	static unsigned int	i = 0;
 	static char			*curr_msg = NULL;
@@ -65,13 +65,13 @@ int				get_next_chunk(char *msg, int fd, char *buf)
 		len = ft_strlen(msg + i);
 		if (len > BUF_SIZE)
 			len = BUF_SIZE;
-		strncpy(buf, msg + i, len);
+		ft_strncpy((char*)buf, msg + i, len);
 		i += len;
 		return (len);
 	}
 }
-/*
-int				get_next_parsed_chunk(char *msg, int fd, char *buf)
+
+int				get_next_parsed_chunk(char *msg, int fd, unsigned char *buf)
 {
 	int							red;
 	static unsigned long long	len = 0;
@@ -84,8 +84,8 @@ int				get_next_parsed_chunk(char *msg, int fd, char *buf)
 	{
 		if (last)
 		{
-			do 56 bytes of 0
-			then add len;
+			ft_bzero(buf, 64);
+			*((long long *)(buf + 56)) = len;
 			len = 0;
 			last = 0;
 			return (1);
@@ -94,32 +94,25 @@ int				get_next_parsed_chunk(char *msg, int fd, char *buf)
 			return (0);
 	}
 
-	if (chunklen ==  64)
-		len += 64
-	else if (chunklen < 56) 
-		add 128 and length
-	else if (!last)
+	if (red ==  64)
+		len += 64;
+	else
 	{
-		append 128 and 0's
-		last = 1;
+		ft_bzero(buf + red, 64 - red);
+		buf[red] = 128;
+		if (red < 56)
+			*((long long *)(buf + 56)) = len;
+		else
+			last = 1;
+		len += red;
 	}
-return (1);
-	
-
-//Pre-processing: adding a single 1 bit
-append "1" bit to message
-// Notice: the input bytes are considered as bits strings,
-//  where the first bit is the most significant bit of the byte.[49]
-
-//Pre-processing: padding with zeros
-append "0" bit until message length in bits ≡ 448 56bytes  (mod 512) 64bytes
-append original length in bits mod 2^64 to message
-	
+	return (1);
 }
 
 
 
-int				*get_new_digest(char *chunk, unsigned int curr_digest[4])
+unsigned int	*get_new_digest(unsigned char *chunk, 
+								unsigned int curr_digest[4])
 {
 	static unsigned int	new_digest[4];
 	unsigned int		*m;
@@ -128,7 +121,7 @@ int				*get_new_digest(char *chunk, unsigned int curr_digest[4])
 	unsigned int		f;
 
 	m = break_into_words(chunk);	   	
-	ft_memcpy(new_d, curr_digest, sizeof(int) * 4);
+	ft_memcpy(new_digest, curr_digest, sizeof(int) * 4);
 	i = 0;
 	while (i < 64)
 	{
@@ -159,6 +152,7 @@ int				*get_new_digest(char *chunk, unsigned int curr_digest[4])
 		B = B + leftrotate(f, g_s[i]);
  	   i++;
 	}
+	return (new_digest);
 }
 
 
@@ -187,7 +181,7 @@ int				md5_get_digest(char *msg, int fd, unsigned char **digest)
 	}
 	if (err == ERR)
 		return (ERR);
-	*digest = curr_digest;
+	*digest = (unsigned char*)curr_digest;
 	return (0);
 }
 
@@ -206,4 +200,4 @@ unsigned char 		*md5(char *msg, char *file)
 
 	return (digest);
 }
-*/
+
