@@ -6,7 +6,7 @@
 #    By: bvilla <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/10/22 20:11:16 by bvilla            #+#    #+#              #
-#    Updated: 2019/03/05 23:59:57 by bvilla           ###   ########.fr        #
+#    Updated: 2019/04/13 22:58:05 by bvilla           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,7 +43,7 @@ PRINTF_SOURCE = $(PRINTF_FILES:%=$(PRINTF_PATH)/%)
 HEADERS = .
 OBJS = $(SOURCE:%.c=%.o) $(PRINTF_FILES:%.c=%.o)
 
-$(NAME): 
+$(NAME): $(SOURCE)
 	@echo "compiling library"
 	@gcc -g -Wall -Wextra -Werror -c $(SOURCE) $(PRINTF_SOURCE) -I $(HEADERS) 
 	@ar rc $(NAME) $(OBJS) $

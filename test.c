@@ -6,7 +6,7 @@
 /*   By: bvilla <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 19:21:15 by bvilla            #+#    #+#             */
-/*   Updated: 2019/04/13 19:27:23 by bvilla           ###   ########.fr       */
+/*   Updated: 2019/04/13 22:35:19 by bvilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,20 @@ int		main()
 	while (get_next_chunk(str2, -2, buf) > 0)
 	{
 		write(1, buf, 2);
+	}
+
+	unsigned long long num= 0x25461349f55a2c1b;
+	digest = (unsigned char*)&num;
+	while (i < 8){
+		ft_printf("%.2hhx", *(digest + i));
+		i++;
+	}
+	ft_printf("\n");
+	i = 0;
+	digest = eight_byte_big_endian(num);
+	while (i < 8){
+		ft_printf("%.2hhx", *(digest + i));
+		i++;
 	}
 	return (0);
 }

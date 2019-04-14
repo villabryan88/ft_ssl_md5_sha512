@@ -6,7 +6,7 @@
 /*   By: bvilla <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 15:02:59 by bvilla            #+#    #+#             */
-/*   Updated: 2019/04/13 20:05:12 by bvilla           ###   ########.fr       */
+/*   Updated: 2019/04/13 23:29:18 by bvilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,36 +75,32 @@ int				get_next_parsed_chunk(char *msg, int fd, unsigned char *buf)
 {
 	int							red;
 	static unsigned long long	len = 0;
-	static int					last = 0;
+	static int					append_started = 0;
+	static int					append_finished = 0;
 
 	red = get_next_chunk(msg, fd, buf);
 	if (red == -1)
 		return (ERR);
-	if (!red)
+	len += red * 8;
+	if (!red && append_finished)
 	{
-		if (last)
-		{
-			ft_bzero(buf, 64);
-			*((long long *)(buf + 56)) = len;
-			len = 0;
-			last = 0;
-			return (1);
-		}
-		else
-			return (0);
+		append_started = 0;
+		append_finished = 0;
+		return (0);
 	}
-
-	if (red ==  64)
-		len += 64;
-	else
+	if (red < 64)
 	{
 		ft_bzero(buf + red, 64 - red);
-		buf[red] = 128;
+		if (!append_started)
+		{
+			buf[red] = 128;
+			append_started = 1;
+		}
 		if (red < 56)
-			*((long long *)(buf + 56)) = len;
-		else
-			last = 1;
-		len += red;
+		{
+			*((unsigned long long *)(buf + 56)) = len;
+			append_finished = 1;
+		}
 	}
 	return (1);
 }
