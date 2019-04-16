@@ -6,7 +6,7 @@
 /*   By: bvilla <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 15:02:59 by bvilla            #+#    #+#             */
-/*   Updated: 2019/04/13 23:29:18 by bvilla           ###   ########.fr       */
+/*   Updated: 2019/04/15 16:48:04 by bvilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 #define B new_digest[1]
 #define C new_digest[2]
 #define D new_digest[3]
-#define BUF_SIZE 64
 
 unsigned int g_s[64] = {
    		7, 12, 17, 22,  7, 12, 17, 22,  7, 12, 17, 22,  7, 12, 17, 22,
@@ -23,7 +22,7 @@ unsigned int g_s[64] = {
 		4, 11, 16, 23,  4, 11, 16, 23,  4, 11, 16, 23,  4, 11, 16, 23,
 		6, 10, 15, 21,  6, 10, 15, 21,  6, 10, 15, 21,  6, 10, 15, 21
 };
-unsigned int g_k[64] = {
+static unsigned int g_k[64] = {
 		0xd76aa478, 0xe8c7b756, 0x242070db, 0xc1bdceee,
 		0xf57c0faf, 0x4787c62a, 0xa8304613, 0xfd469501,
 		0x698098d8, 0x8b44f7af, 0xffff5bb1, 0x895cd7be,
@@ -41,37 +40,7 @@ unsigned int g_k[64] = {
 		0x6fa87e4f, 0xfe2ce6e0, 0xa3014314, 0x4e0811a1,
 		0xf7537e82, 0xbd3af235, 0x2ad7d2bb, 0xeb86d391
 };
-
-int				get_next_chunk(char *msg, int fd, unsigned char *buf)
-{
-	static unsigned int	i = 0;
-	static char			*curr_msg = NULL;
-	unsigned int		len;
-
-
-	if (fd >= 0)
-		return(read(fd, buf, BUF_SIZE));
-	else
-	{
-		if (curr_msg != msg)
-		{
-			i = 0;
-			curr_msg = msg;
-		}
-		if (i >= ft_strlen(msg))
-		{
-			return (0);
-		}
-		len = ft_strlen(msg + i);
-		if (len > BUF_SIZE)
-			len = BUF_SIZE;
-		ft_strncpy((char*)buf, msg + i, len);
-		i += len;
-		return (len);
-	}
-}
-
-int				get_next_parsed_chunk(char *msg, int fd, unsigned char *buf)
+static int			get_next_parsed_chunk(char *msg, int fd, unsigned char *buf)
 {
 	int							red;
 	static unsigned long long	len = 0;
@@ -107,7 +76,7 @@ int				get_next_parsed_chunk(char *msg, int fd, unsigned char *buf)
 
 
 
-unsigned int	*get_new_digest(unsigned char *chunk, 
+static unsigned int	*get_new_digest(unsigned char *chunk, 
 								unsigned int curr_digest[4])
 {
 	static unsigned int	new_digest[4];
@@ -145,14 +114,14 @@ unsigned int	*get_new_digest(unsigned char *chunk,
 		A = D;
 		D = C;
 		C = B;
-		B = B + leftrotate(f, g_s[i]);
+		B = B + ltrot(f, g_s[i]);
  	   i++;
 	}
 	return (new_digest);
 }
 
 
-int				md5_get_digest(char *msg, int fd, unsigned char **digest)
+int				md5(char *msg, int fd, unsigned char **digest)
 {
 	unsigned char		buf[BUF_SIZE];
 	static unsigned int	curr_digest[4];
@@ -180,7 +149,7 @@ int				md5_get_digest(char *msg, int fd, unsigned char **digest)
 	*digest = (unsigned char*)curr_digest;
 	return (0);
 }
-
+/*
 unsigned char 		*md5(char *msg, char *file)
 {
 	int				fd;
@@ -196,4 +165,4 @@ unsigned char 		*md5(char *msg, char *file)
 
 	return (digest);
 }
-
+*/
