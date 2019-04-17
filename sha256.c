@@ -6,7 +6,7 @@
 /*   By: bvilla <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/15 13:05:04 by bvilla            #+#    #+#             */
-/*   Updated: 2019/04/15 21:28:06 by bvilla           ###   ########.fr       */
+/*   Updated: 2019/04/16 22:12:08 by bvilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ static int			get_next_parsed_chunk(char *msg, int fd, unsigned char *buf)
 	{
 		append_started = 0;
 		append_finished = 0;
+		len = 0;
 		return (0);
 	}
 	if (red < 64)
@@ -124,7 +125,7 @@ static unsigned int	*get_new_digest(unsigned char *chunk,
 }
 
 
-int				sha256(char *msg, int fd, unsigned char **digest)
+int				sha256(char *msg, int fd, char **digest)
 {
 	unsigned char		buf[BUF_SIZE];
 	static unsigned int	curr_digest[8];
@@ -154,7 +155,10 @@ int				sha256(char *msg, int fd, unsigned char **digest)
 	}
 	if (err == ERR)
 		return (ERR);
-	*digest = (unsigned char*)curr_digest;
+	i = 0;
+	while (i < 8)
+		reverse_bytes(curr_digest + i++, sizeof(int));
+	*digest = digest_to_string((unsigned char*)curr_digest, 32);
 	return (0);
 }
 

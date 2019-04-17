@@ -6,7 +6,7 @@
 /*   By: bvilla <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/15 13:00:38 by bvilla            #+#    #+#             */
-/*   Updated: 2019/04/15 21:15:35 by bvilla           ###   ########.fr       */
+/*   Updated: 2019/04/16 22:16:49 by bvilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,12 +91,23 @@ void		reverse_bytes(void *s, size_t n)
 	n--;
 	}
 }
-void		print_buf_hex(unsigned char *buf)
+
+char	*digest_to_string(unsigned char *digest, int n)
 {
 	int		i;
+	char	*str;
+	char	*val;
 
+	val = "0123456789abcdef";
+
+	str = ft_memalloc(sizeof(char) * (n * 2 + 1));
 	i = 0;
-	while (i < 64)
-		ft_printf("%.2hhx", buf[i++]);
-	ft_printf("\n");
+	while (i < n * 2)
+	{
+		str[i] = val[*digest / 16];
+		str[i + 1] = val[*digest % 16];
+		digest++;
+		i += 2;
+	}
+	return (str);
 }
