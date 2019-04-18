@@ -6,7 +6,7 @@
 /*   By: bvilla <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 16:03:22 by bvilla            #+#    #+#             */
-/*   Updated: 2019/04/16 22:11:24 by bvilla           ###   ########.fr       */
+/*   Updated: 2019/04/17 17:10:34 by bvilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,15 @@
 # define ERR -1
 # define BUF_SIZE 64
 
+typedef int (*t_hash)(char*, int, char**);
+
+typedef struct 	s_flag 	{
+	char		stdin_done;
+	char		printed;
+	char		*file_name;
+	char		q;
+	char		r;
+}				t_flag;
 
 unsigned int	*set_s();
 unsigned int	*set_k();
