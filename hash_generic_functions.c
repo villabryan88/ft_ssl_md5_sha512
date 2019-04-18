@@ -6,22 +6,11 @@
 /*   By: bvilla <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/15 13:00:38 by bvilla            #+#    #+#             */
-/*   Updated: 2019/04/16 22:16:49 by bvilla           ###   ########.fr       */
+/*   Updated: 2019/04/17 23:32:11 by bvilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_ssl.h>
-
-unsigned int	ltrot(unsigned int x, unsigned int c)
-{
-	return ((x << c) | (x >> (32 - c)));
-}
-
-unsigned int	rtrot(unsigned int x, unsigned int c)
-{
-	return ((x >> c) | (x << (32 - c)));
-}
-
 
 unsigned int	*break_into_words(unsigned char *chunk)
 {
