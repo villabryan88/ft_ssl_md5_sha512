@@ -6,62 +6,20 @@
 /*   By: bvilla <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/15 13:00:38 by bvilla            #+#    #+#             */
-/*   Updated: 2019/04/17 23:32:11 by bvilla           ###   ########.fr       */
+/*   Updated: 2019/04/18 14:50:41 by bvilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_ssl.h>
 
-unsigned int	*break_into_words(unsigned char *chunk)
+unsigned int	ltrot(unsigned int x, unsigned int c)
 {
-	static unsigned int			m[16];
-
-	ft_memcpy(m, chunk, sizeof(int) * 16);
-	return (m);
+	return ((x << c) | (x >> (32 - c)));
 }
 
-int				get_next_chunk(char *msg, int fd, unsigned char *buf)
+unsigned int	rtrot(unsigned int x, unsigned int c)
 {
-	static unsigned int	i = 0;
-	static char			*curr_msg = NULL;
-	unsigned int		len;
-
-
-	if (fd >= 0)
-		return(read(fd, buf, BUF_SIZE));
-	else
-	{
-		if (curr_msg != msg)
-		{
-			i = 0;
-			curr_msg = msg;
-		}
-		if (i >= ft_strlen(msg))
-		{
-			return (0);
-		}
-		len = ft_strlen(msg + i);
-		if (len > BUF_SIZE)
-			len = BUF_SIZE;
-		ft_strncpy((char*)buf, msg + i, len);
-		i += len;
-		return (len);
-	}
-}
-
-unsigned char	*eight_byte_big_endian(unsigned long long n)
-{
-	static unsigned char	big_end[8];
-	int						i;
-
-	i = 7;
-	while (i >= 0)
-	{
-		big_end[i] = n % 256;
-		n /= 256;
-		i--;
-	}
-	return (big_end);
+	return ((x >> c) | (x << (32 - c)));
 }
 
 void		reverse_bytes(void *s, size_t n)

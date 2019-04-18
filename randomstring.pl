@@ -8,7 +8,7 @@
 
 my @chars = ("A".."Z", "a".."z");
 my $string;
-my @range = (100000..200000);
+my @range = (1..200);
 my $num = $ARGV[0];
 $string .= $chars[rand @chars] for 1..(rand @range);
 print "$string";

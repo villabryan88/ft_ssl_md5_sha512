@@ -6,13 +6,13 @@
 #    By: bvilla <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/10/22 20:11:16 by bvilla            #+#    #+#              #
-#    Updated: 2019/04/17 23:31:55 by bvilla           ###   ########.fr        #
+#    Updated: 2019/04/18 14:51:11 by bvilla           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = ft_ssl
 SOURCE = md5.c sha256.c hash_generic_functions.c ft_ssl.c print.c do_flags.c \
-		 bit_manip.c
+		padding.c
 INC = .
 OBJS = $(SOURCE:%.c=%.o)
 

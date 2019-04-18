@@ -6,7 +6,7 @@
 /*   By: bvilla <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 15:02:59 by bvilla            #+#    #+#             */
-/*   Updated: 2019/04/16 22:03:41 by bvilla           ###   ########.fr       */
+/*   Updated: 2019/04/18 13:21:32 by bvilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,53 +40,17 @@ static unsigned int g_k[64] = {
 		0x6fa87e4f, 0xfe2ce6e0, 0xa3014314, 0x4e0811a1,
 		0xf7537e82, 0xbd3af235, 0x2ad7d2bb, 0xeb86d391
 };
-static int			get_next_parsed_chunk(char *msg, int fd, unsigned char *buf)
-{
-	int							red;
-	static unsigned long long	len = 0;
-	static int					append_started = 0;
-	static int					append_finished = 0;
-
-	red = get_next_chunk(msg, fd, buf);
-	if (red == -1)
-		return (ERR);
-	len += red * 8;
-	if (!red && append_finished)
-	{
-		append_started = 0;
-		append_finished = 0;
-		len = 0;
-		return (0);
-	}
-	if (red < 64)
-	{
-		ft_bzero(buf + red, 64 - red);
-		if (!append_started)
-		{
-			buf[red] = 128;
-			append_started = 1;
-		}
-		if (red < 56)
-		{
-			*((unsigned long long *)(buf + 56)) = len;
-			append_finished = 1;
-		}
-	}
-	return (1);
-}
-
-
 
 static unsigned int	*get_new_digest(unsigned char *chunk, 
 								unsigned int curr_digest[4])
 {
 	static unsigned int	new_digest[4];
-	unsigned int		*m;
+	unsigned int		m[16];
 	unsigned int		i;
 	unsigned int		g;
 	unsigned int		f;
 
-	m = break_into_words(chunk);	   	
+	ft_memcpy(m, chunk, sizeof(int) * 16);	
 	ft_memcpy(new_digest, curr_digest, sizeof(int) * 4);
 	i = 0;
 	while (i < 64)
@@ -135,7 +99,7 @@ int				md5(char *msg, int fd, char **digest)
 	curr_digest[2] = 0x98badcfe;
 	curr_digest[3] = 0x10325476;
 
-	while((err = get_next_parsed_chunk(msg, fd, buf)) > 0)
+	while((err = get_next_parsed_chunk(msg, fd, buf, lil_end)) > 0)
 	{
 	    new_digest = get_new_digest(buf, curr_digest);
 		i = 0;
@@ -150,20 +114,3 @@ int				md5(char *msg, int fd, char **digest)
 	*digest = digest_to_string((unsigned char*)curr_digest, 16);
 	return (0);
 }
-/*
-unsigned char 		*md5(char *msg, char *file)
-{
-	int				fd;
-	unsigned char	*digest;
-
-
-	fd = file ? open(file, O_RDONLY) : -2;
-	if (fd == -1)
-		return(NULL);
-
-	if (md5_get_digest(msg, fd, &digest) == ERR)
-		return(NULL);
-
-	return (digest);
-}
-*/

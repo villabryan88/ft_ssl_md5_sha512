@@ -6,7 +6,7 @@
 /*   By: bvilla <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/15 13:05:04 by bvilla            #+#    #+#             */
-/*   Updated: 2019/04/16 22:12:08 by bvilla           ###   ########.fr       */
+/*   Updated: 2019/04/18 13:21:29 by bvilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,43 +41,6 @@ static unsigned int g_k[64] = {
 		0x5b9cca4f, 0x682e6ff3,	0x748f82ee, 0x78a5636f, 0x84c87814, 0x8cc70208,
 		0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2
 };
-
-static int			get_next_parsed_chunk(char *msg, int fd, unsigned char *buf)
-{
-	int							red;
-	static unsigned long long	len = 0;
-	static int					append_started = 0;
-	static int					append_finished = 0;
-
-	red = get_next_chunk(msg, fd, buf);
-	if (red == -1)
-		return (ERR);
-	len += red * 8;
-	if (!red && append_finished)
-	{
-		append_started = 0;
-		append_finished = 0;
-		len = 0;
-		return (0);
-	}
-	if (red < 64)
-	{
-		ft_bzero(buf + red, 64 - red);
-		if (!append_started)
-		{
-			buf[red] = 128;
-			append_started = 1;
-		}
-		if (red < 56)
-		{
-			ft_memcpy(buf + 56, eight_byte_big_endian(len), 8);
-			append_finished = 1;
-		}
-	}
-	return (1);
-}
-
-
 
 static unsigned int	*get_new_digest(unsigned char *chunk, 
 								unsigned int curr_digest[8])
@@ -143,7 +106,7 @@ int				sha256(char *msg, int fd, char **digest)
 	curr_digest[7] = 0x5be0cd19;
 
 
-	while((err = get_next_parsed_chunk(msg, fd, buf)) > 0)
+	while((err = get_next_parsed_chunk(msg, fd, buf, big_end)) > 0)
 	{
 	    new_digest = get_new_digest(buf, curr_digest);
 		i = 0;
