@@ -6,7 +6,7 @@
 /*   By: bvilla <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/17 18:12:21 by bvilla            #+#    #+#             */
-/*   Updated: 2019/04/18 23:28:08 by bvilla           ###   ########.fr       */
+/*   Updated: 2019/04/18 23:54:42 by bvilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int		print_error(t_error err, char **av, int j)
 				"Standard commands:\n\n"
 				"Message Digest commands:\n"
 				"md5\n"
+				"sha224\n"
 				"sha256\n\n"
 				"Cipher commands:\n", av[1]);
 	return (ERR);
