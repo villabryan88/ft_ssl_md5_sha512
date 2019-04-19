@@ -6,7 +6,7 @@
 /*   By: bvilla <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 16:03:22 by bvilla            #+#    #+#             */
-/*   Updated: 2019/04/18 22:45:31 by bvilla           ###   ########.fr       */
+/*   Updated: 2019/04/18 23:23:47 by bvilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef enum	e_end {
 }				t_end;
 
 typedef int		(*t_hash)(char*, int, char**);
+typedef void	(*t_cmd)(int, char**);
 
 typedef struct	s_flag {
 	char		stdin_done;
@@ -52,10 +53,13 @@ void			print_formatted_digest(t_flag *flags,
 									char *hash_alg, char *msg, int fd);
 void			print_usage(void);
 char			*stdin_to_string(void);
-t_hash			dispatcher(char *hash_al);
+t_hash			hash_dispatcher(char *hash_al);
 int				do_flags(int ac, char **av, int *i, t_flag *flags);
 int				print_error(t_error err, char **av, int j);
 int				get_next_parsed_chunk(char *msg, int fd,
 										unsigned char *buf, t_end end);
 int				sha224(char *msg, int fd, char **digest);
+void			invalid_cmd(int ac, char **av);
+t_hash			hash_dispatcher(char *hash_alg);
+void			do_hash_cmd(int ac, char **av);
 #endif

@@ -6,7 +6,7 @@
 /*   By: bvilla <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/17 18:32:54 by bvilla            #+#    #+#             */
-/*   Updated: 2019/04/18 15:14:07 by bvilla           ###   ########.fr       */
+/*   Updated: 2019/04/18 23:46:45 by bvilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,10 @@ void		do_p(char **av, t_flag *flags)
 		flags->printed = 1;
 	}
 	else
+	{
 		print_digest(av[1], "", -2);
+		ft_putchar('\n');
+	}
 }
 
 int			do_s(int ac, char **av, int *j, t_flag *flags)

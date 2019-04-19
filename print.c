@@ -6,7 +6,7 @@
 /*   By: bvilla <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/17 18:12:21 by bvilla            #+#    #+#             */
-/*   Updated: 2019/04/18 22:44:40 by bvilla           ###   ########.fr       */
+/*   Updated: 2019/04/18 23:28:08 by bvilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,9 @@ int		print_error(t_error err, char **av, int j)
 	if (err == invalid_command)
 		ft_printf("ft_ssl: %s: invalid command\n\n"
 				"Standard commands:\n\n"
-				"md5 [-pqr] [-s string] [files..]\n"
-				"sha256 [-pqr] [-s string] [files..]\n\n"
+				"Message Digest commands:\n"
+				"md5\n"
+				"sha256\n\n"
 				"Cipher commands:\n", av[1]);
 	return (ERR);
 }
@@ -32,7 +33,7 @@ void	print_digest(char *hash_alg, char *msg, int fd)
 	char	*digest;
 	int		err;
 
-	err = dispatcher(hash_alg)(msg, fd, &digest);
+	err = hash_dispatcher(hash_alg)(msg, fd, &digest);
 	if (err == ERR)
 	{
 		ft_printf("error");
