@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sha256.c                                           :+:      :+:    :+:   */
+/*   sha224.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bvilla <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/15 13:05:04 by bvilla            #+#    #+#             */
-/*   Updated: 2019/04/18 22:31:41 by bvilla           ###   ########.fr       */
+/*   Created: 2019/04/18 22:39:03 by bvilla            #+#    #+#             */
+/*   Updated: 2019/04/18 22:48:51 by bvilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,17 +97,17 @@ static unsigned int	*get_new_digest(unsigned char *chunk,
 
 static void			set_start_values(unsigned int *curr_digest)
 {
-	curr_digest[0] = 0x6a09e667;
-	curr_digest[1] = 0xbb67ae85;
-	curr_digest[2] = 0x3c6ef372;
-	curr_digest[3] = 0xa54ff53a;
-	curr_digest[4] = 0x510e527f;
-	curr_digest[5] = 0x9b05688c;
-	curr_digest[6] = 0x1f83d9ab;
-	curr_digest[7] = 0x5be0cd19;
+	curr_digest[0] = 0xc1059ed8;
+	curr_digest[1] = 0x367cd507;
+	curr_digest[2] = 0x3070dd17;
+	curr_digest[3] = 0xf70e5939;
+	curr_digest[4] = 0xffc00b31;
+	curr_digest[5] = 0x68581511;
+	curr_digest[6] = 0x64f98fa7;
+	curr_digest[7] = 0xbefa4fa4;
 }
 
-int					sha256(char *msg, int fd, char **digest)
+int					sha224(char *msg, int fd, char **digest)
 {
 	unsigned char		buf[BUF_SIZE];
 	static unsigned int	curr_digest[8];
@@ -131,6 +131,6 @@ int					sha256(char *msg, int fd, char **digest)
 	i = 0;
 	while (i < 8)
 		reverse_bytes(curr_digest + i++, sizeof(int));
-	*digest = digest_to_string((unsigned char*)curr_digest, 32);
+	*digest = digest_to_string((unsigned char*)curr_digest, 28);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: bvilla <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/17 18:32:54 by bvilla            #+#    #+#             */
-/*   Updated: 2019/04/17 21:39:16 by bvilla           ###   ########.fr       */
+/*   Updated: 2019/04/18 15:14:07 by bvilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,20 +31,19 @@ void		do_p(char **av, t_flag *flags)
 	}
 	else
 		print_digest(av[1], "", -2);
-		
 }
 
 int			do_s(int ac, char **av, int *j, t_flag *flags)
 {
 	char	*msg;
 
-	if(!*++av[*j])
+	if (!*++av[*j])
 		(*j)++;
 	if (*j >= ac)
-		return(print_error(no_s_argument, av, *j));
+		return (print_error(no_s_argument, av, *j));
 	msg = ft_strdup(av[*j]);
 	while (*av[*j])
-	av[*j]++;
+		av[*j]++;
 	av[*j]--;
 	print_formatted_digest(flags, av[1], msg, -2);
 	free(msg);
@@ -53,7 +52,7 @@ int			do_s(int ac, char **av, int *j, t_flag *flags)
 
 int			do_flags(int ac, char **av, int *j, t_flag *flags)
 {
-	while (*j < ac && *av[*j] == '-' )
+	while (*j < ac && *av[*j] == '-')
 	{
 		while (*j < ac && *++av[*j])
 		{
@@ -62,16 +61,16 @@ int			do_flags(int ac, char **av, int *j, t_flag *flags)
 			else if (*av[*j] == 'r')
 				flags->r = 1;
 			else if (*av[*j] == 'p')
-				do_p(av, flags);	
+				do_p(av, flags);
 			else if (*av[*j] == 's')
 			{
-				if(do_s(ac, av, j, flags) == ERR)
-					return (ERR);		
+				if (do_s(ac, av, j, flags) == ERR)
+					return (ERR);
 			}
 			else
-				return(print_error(illegal_option, av, *j));
+				return (print_error(illegal_option, av, *j));
 		}
 		(*j)++;
-	}	
+	}
 	return (0);
 }

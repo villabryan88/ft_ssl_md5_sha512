@@ -6,7 +6,7 @@
 /*   By: bvilla <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/15 13:00:38 by bvilla            #+#    #+#             */
-/*   Updated: 2019/04/18 14:50:41 by bvilla           ###   ########.fr       */
+/*   Updated: 2019/04/18 15:47:30 by bvilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ unsigned int	rtrot(unsigned int x, unsigned int c)
 	return ((x >> c) | (x << (32 - c)));
 }
 
-void		reverse_bytes(void *s, size_t n)
+void			reverse_bytes(void *s, size_t n)
 {
 	unsigned int		i;
 	unsigned char		tmp;
@@ -34,19 +34,18 @@ void		reverse_bytes(void *s, size_t n)
 		tmp = ((unsigned char*)s)[i];
 		((unsigned char*)s)[i] = ((unsigned char*)s)[n];
 		((unsigned char*)s)[n] = tmp;
-	i++;
-	n--;
+		i++;
+		n--;
 	}
 }
 
-char	*digest_to_string(unsigned char *digest, int n)
+char			*digest_to_string(unsigned char *digest, int n)
 {
 	int		i;
 	char	*str;
 	char	*val;
 
 	val = "0123456789abcdef";
-
 	str = ft_memalloc(sizeof(char) * (n * 2 + 1));
 	i = 0;
 	while (i < n * 2)
