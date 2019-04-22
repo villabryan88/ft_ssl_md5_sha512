@@ -6,7 +6,7 @@
 /*   By: bvilla <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/22 20:07:39 by bvilla            #+#    #+#             */
-/*   Updated: 2019/03/06 00:02:05 by bvilla           ###   ########.fr       */
+/*   Updated: 2019/04/22 13:13:37 by bvilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,4 +99,5 @@ int					ft_printf(char *s, ...);
 int					get_next_line(const int fd, char **line);
 void				ft_strarrdel(char **str_arr);
 void				ft_lstdelnode(void *content, size_t size);
+char				*ft_strarrsearch(char **haystack, char *needle);
 #endif
