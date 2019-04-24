@@ -6,7 +6,7 @@
 /*   By: bvilla <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/22 14:32:43 by bvilla            #+#    #+#             */
-/*   Updated: 2019/04/23 13:20:12 by bvilla           ###   ########.fr       */
+/*   Updated: 2019/04/23 15:29:40 by bvilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ static int	do_padding(int red, unsigned long len[2], unsigned char *buf,
 		*((unsigned long*)(buf + 128 - 8)) = len[1];
 		if (end == big_end)
 		{
-			reverse_bytes(buf + BUF_SIZE - 16, 8);
-			reverse_bytes(buf + BUF_SIZE - 8, 8);
+			reverse_bytes(buf + 128 - 16, 8);
+			reverse_bytes(buf + 128 - 8, 8);
 		}
 		append_started = 0;
 		return (1);
@@ -45,12 +45,12 @@ int			get_next_parsed_chunk1024(char *msg, int fd, unsigned char *buf,
 	static unsigned long		len[] = {0, 0};
 	static int					padding_finished = 0;
 
-	red = get_next_chunk(msg, fd, buf);
+	red = get_next_chunk1024(msg, fd, buf);
 	if (red == -1)
 		return (ERR);
 	len[1] += red * 8;
-	if (len[0] < red * 8lu)
-		len[1]++;
+	if (len[1] < red * 8lu)
+		len[0]++;
 	if (red < 128)
 	{
 		if (padding_finished)

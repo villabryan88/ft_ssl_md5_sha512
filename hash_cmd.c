@@ -6,7 +6,7 @@
 /*   By: bvilla <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 23:05:10 by bvilla            #+#    #+#             */
-/*   Updated: 2019/04/22 14:15:09 by bvilla           ###   ########.fr       */
+/*   Updated: 2019/04/23 19:10:19 by bvilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,14 @@
 
 t_hash	hash_dispatcher(char *hash_alg)
 {
-	static char		*hashes[] = {"md5", "sha256", "sha224", NULL};
-	static t_hash	hash_table[] = {md5, sha256, sha224};
-	char			*key_p;
+	static char		*hashes[] = {"md5", "sha256", "sha224", "sha512",
+									"sha384", NULL};
+	static t_hash	hash_table[] = {md5, sha256, sha224, sha512, sha384};
+	char			**key_p;
 
 	if (!(key_p = ft_strarrsearch(hashes, hash_alg)))
 		return (NULL);
-	return (hash_table[*hashes - key_p]);
+	return (hash_table[key_p - hashes]);
 }
 
 void	do_files(char **av, int *j, t_flag *flags)

@@ -6,7 +6,7 @@
 /*   By: bvilla <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 16:03:22 by bvilla            #+#    #+#             */
-/*   Updated: 2019/04/23 13:16:57 by bvilla           ###   ########.fr       */
+/*   Updated: 2019/04/23 16:19:51 by bvilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,7 @@ void			do_hash_cmd(int ac, char **av);
 int				get_next_chunk1024(char *msg, int fd, unsigned char *buf);
 int				get_next_parsed_chunk1024(char *msg, int fd, unsigned char *buf,
 											t_end end);
+int				sha512(char *msg, int fd, char **digest);
+unsigned long	rtrot64(unsigned long x, unsigned long c);
+int				sha384(char *msg, int fd, char **digest);
 #endif

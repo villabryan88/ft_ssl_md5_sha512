@@ -6,13 +6,13 @@
 /*   By: bvilla <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 14:50:05 by bvilla            #+#    #+#             */
-/*   Updated: 2019/04/23 13:17:16 by bvilla           ###   ########.fr       */
+/*   Updated: 2019/04/23 13:59:51 by bvilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_ssl.h>
 
-static int	do_padding(int red, unsigned long long len, unsigned char *buf,
+static int	do_padding(int red, unsigned long len, unsigned char *buf,
 						t_end end)
 {
 	static int	append_started = 0;

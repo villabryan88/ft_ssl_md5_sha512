@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sha512.c                                           :+:      :+:    :+:   */
+/*   sha384.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bvilla <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/22 14:23:32 by bvilla            #+#    #+#             */
-/*   Updated: 2019/04/23 19:08:25 by bvilla           ###   ########.fr       */
+/*   Created: 2019/04/23 16:14:22 by bvilla            #+#    #+#             */
+/*   Updated: 2019/04/23 19:09:22 by bvilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,17 +113,17 @@ static unsigned long	*get_new_digest(unsigned char *chunk,
 
 static void				set_start_values(unsigned long *curr_digest)
 {
-	curr_digest[0] = 0x6a09e667f3bcc908;
-	curr_digest[1] = 0xbb67ae8584caa73b;
-	curr_digest[2] = 0x3c6ef372fe94f82b;
-	curr_digest[3] = 0xa54ff53a5f1d36f1;
-	curr_digest[4] = 0x510e527fade682d1;
-	curr_digest[5] = 0x9b05688c2b3e6c1f;
-	curr_digest[6] = 0x1f83d9abfb41bd6b;
-	curr_digest[7] = 0x5be0cd19137e2179;
+	curr_digest[0] = 0xcbbb9d5dc1059ed8;
+	curr_digest[1] = 0x629a292a367cd507;
+	curr_digest[2] = 0x9159015a3070dd17;
+	curr_digest[3] = 0x152fecd8f70e5939;
+	curr_digest[4] = 0x67332667ffc00b31;
+	curr_digest[5] = 0x8eb44a8768581511;
+	curr_digest[6] = 0xdb0c2e0d64f98fa7;
+	curr_digest[7] = 0x47b5481dbefa4fa4;
 }
 
-int						sha512(char *msg, int fd, char **digest)
+int						sha384(char *msg, int fd, char **digest)
 {
 	unsigned char			buf[128];
 	static unsigned long	curr_digest[8];
@@ -147,6 +147,6 @@ int						sha512(char *msg, int fd, char **digest)
 	i = 0;
 	while (i < 8)
 		reverse_bytes(curr_digest + i++, sizeof(long));
-	*digest = digest_to_string((unsigned char*)curr_digest, 64);
+	*digest = digest_to_string((unsigned char*)curr_digest, 48);
 	return (0);
 }

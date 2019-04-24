@@ -1,24 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strarrsearch.c                                  :+:      :+:    :+:   */
+/*   ft_printhex.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bvilla <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/22 13:10:32 by bvilla            #+#    #+#             */
-/*   Updated: 2019/04/23 14:11:36 by bvilla           ###   ########.fr       */
+/*   Created: 2019/04/23 15:32:40 by bvilla            #+#    #+#             */
+/*   Updated: 2019/04/23 15:40:50 by bvilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libft.h>
 
-char	**ft_strarrsearch(char **haystack, char *needle)
+void	ft_printhex(void *str, size_t n)
 {
-	while (*haystack)
+	unsigned int	i;
+	unsigned char	*s;
+
+	i = 0;
+	s = str;
+	while (i < n)
 	{
-		if (ft_strequ(*haystack, needle))
-			return (haystack);
-		haystack++;
+		ft_printf("%.2hhx", s[i]);
+		i++;
 	}
-	return (NULL);
+	ft_printf("\n");
 }

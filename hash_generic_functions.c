@@ -6,7 +6,7 @@
 /*   By: bvilla <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/15 13:00:38 by bvilla            #+#    #+#             */
-/*   Updated: 2019/04/18 15:47:30 by bvilla           ###   ########.fr       */
+/*   Updated: 2019/04/23 16:02:45 by bvilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,11 @@ unsigned int	ltrot(unsigned int x, unsigned int c)
 unsigned int	rtrot(unsigned int x, unsigned int c)
 {
 	return ((x >> c) | (x << (32 - c)));
+}
+
+unsigned long	rtrot64(unsigned long x, unsigned long c)
+{
+	return ((x >> c) | (x << (64 - c)));
 }
 
 void			reverse_bytes(void *s, size_t n)
